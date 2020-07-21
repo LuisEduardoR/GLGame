@@ -8,6 +8,8 @@
 
 #include <GL/glew.h>
 
+#include "gl_debug.hpp"
+
 /* Compiles a shader from a string containing source code and returns it's ID */
 uint32_t CompileShader(uint32_t type, const std::string& source);
 

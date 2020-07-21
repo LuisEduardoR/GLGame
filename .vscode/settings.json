@@ -46,6 +46,14 @@
         "iterator": "cpp",
         "chrono": "cpp",
         "functional": "cpp",
-        "ratio": "cpp"
+        "ratio": "cpp",
+        "bit": "cpp",
+        "compare": "cpp",
+        "concepts": "cpp",
+        "numeric": "cpp",
+        "random": "cpp",
+        "ranges": "cpp",
+        "codecvt": "cpp",
+        "map": "cpp"
     }
 }

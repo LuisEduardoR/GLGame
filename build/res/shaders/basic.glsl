@@ -2,21 +2,23 @@
 #version 410 core
 
 layout(location = 0) in vec4 position;
-out vec4 colorV;
+out vec4 v_color;
 
 void main()
 {
    gl_Position = position;
-   colorV = vec4( 0.5 + position.x,  0.5 - position.x, 0.5 + position.y, 1.0);
+   v_color = vec4( 0.5 + position.x,  0.5 - position.x, 0.0, 1.0);
 }
 
 #shader fragment
 #version 410 core
 
-in vec4 colorV;
-out vec4 color;
+in vec4 v_color;
+layout(location = 0) out vec4 color;
+
+uniform vec4 u_Color;
 
 void main()
 {
-   color = colorV;
+   color = v_color + u_Color;
 }

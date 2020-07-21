@@ -14,10 +14,22 @@
 			"problemMatcher": [
 				"$gcc"
 			],
-			"group": {
-				"kind": "build",
-				"isDefault": true
-			}
+			"group": "build"
+		},
+		{
+			"type": "shell",
+			"label": "C/C++: g++.exe build release and run",
+			"command": "mingw32-make",
+			"args": [
+				"release-run"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": "build"
 		},
 		{
 			"type": "shell",
@@ -33,6 +45,24 @@
 				"$gcc"
 			],
 			"group": "build"
+		},
+		{
+			"type": "shell",
+			"label": "C/C++: g++.exe build debug and run",
+			"command": "mingw32-make",
+			"args": [
+				"debug-run"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
 		}
 	]
 }

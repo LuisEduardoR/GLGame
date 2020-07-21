@@ -32,7 +32,7 @@ You will need some configuration before being able to compile the project, follo
   - Add `C:\msys64\mingw64\bin` to **PATH** (Assuming MSYS2 was installed on `C:\msys64`)
 
 - **For x86 target:** 
-  - Do the same as above but swap all ocurrences of `mingw-w64-x86_64` for `mingw-w64-i686` and `C:\msys64\mingw64\bin` for `C:\msys64\mingw32\bin` in the **PATH**
+  - Do the same as above but swap all occurrences of `mingw-w64-x86_64` for `mingw-w64-i686` and `C:\msys64\mingw64\bin` for `C:\msys64\mingw32\bin` in the **PATH**
 
 **Note:** If MSYS2 was installed somewhere else other than `C:\msys64\`, you will need to not only correct the **PATH** accordingly but the `.vscode\c_cpp_properties.json` and `.vscode\launch.json` too.
 
