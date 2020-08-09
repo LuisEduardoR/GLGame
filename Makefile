@@ -5,7 +5,7 @@ SRC = ./src/**.cpp
 LINKER = -static-libgcc -static-libstdc++ -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic -lmingw32 -lSDL2main -lSDL2 -lglew32 -lopengl32 -lglu32 -lgdi32
 
 WARNING_FLAGS = -Wall -Wno-comment
-RELEASE_FLAGS = -O3
+RELEASE_FLAGS = -O3 -mfpmath=sse
 DEBUG_FLAGS = -g -D_DEBUG
 
 OUTPUT_DIR = ./build

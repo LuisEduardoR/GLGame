@@ -18,14 +18,19 @@ Renderer::Renderer(SDL_Window* window, SDL_GLContext context) {
 
 }
 
-/* Loads game shaders from a files in a certain path (returns a pair with the number of shaders loaded successfully and the total number of shaders found) */
-std::pair<uint32_t,uint32_t> Renderer::LoadShaders(const std::string& path) {
+/* Loads shaders from files in a certain path to the renderer, returns a struct with the results (if something really bad happen "ShaderLoadResult.errors" will contain a string explaining what happened, otherwise it will be an empty string, if it's just shader files failing to load "errors" will be empty, but the number of failures will be reported in "ShaderLoadResult.shaders_failed") */
+ShaderLoadResult Renderer::LoadShaders(const std::string& path) {
 
-    uint32_t successfull_shaders = 0;
-    uint32_t total_shaders = 0;
+    int32_t total_files = 0;
+    int32_t total_shaders = 0;
+    int32_t successfull_shaders = 0;
+
+    // TODO: check for exceptions when handling the directory and files
 
     /* Checks for files in the path provided */
     for (const auto& entry : std::filesystem::directory_iterator(path)) {
+
+        total_files++;
 
         std::string fullpath = entry.path().string();
         std::string filename = entry.path().filename().string();
@@ -52,11 +57,11 @@ std::pair<uint32_t,uint32_t> Renderer::LoadShaders(const std::string& path) {
 
     }
 
-    return std::make_pair(successfull_shaders, total_shaders);
+    return ShaderLoadResult { "", total_files, total_shaders, successfull_shaders, total_shaders - successfull_shaders };
 
 }
 
-/* Requests a shader  to the renderer by name (returns the default_error_shader if no shader is found this shader is created by the renderer class constructor using kErrorVertexShader and )kErrorFragmentShader */
+/* Requests a shader to the renderer by name (returns the Renderer.default_error_shader if no shader is found, this shader is created by the renderer class constructor using kErrorVertexShader and kErrorFragmentShader) */
 uint32_t Renderer::RequestShader(const std::string& name) {
 
     auto iter = this->shaders.find(name);
@@ -67,7 +72,7 @@ uint32_t Renderer::RequestShader(const std::string& name) {
 
 }
 
-/* Checks if a shader is the default_error_shader */
+/* Checks if a shader is the Renderer.default_error_shader */
 bool Renderer::IsErrorShader(uint32_t shader) {
     return (shader == this->default_error_shader);
 }

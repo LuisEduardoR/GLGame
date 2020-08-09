@@ -1,9 +1,8 @@
-#include <utility>
 #include <iostream>
 
 #include <GL/glew.h>
-#include <SDL2/SDL.h>
 #include <glm/vec3.hpp>
+#include <SDL2/SDL.h>
 
 #include "shader.hpp"
 #include "renderer.hpp"
@@ -49,7 +48,6 @@ int main(int argc, char **argv) {
 
     /* GLEW initialization */
     if (glewInit() != GLEW_OK) {
-        // TODO: Actually detect the correct error
         std::cout << "GLEW could not initialize!" << std::endl;
         exit(EXIT_FAILURE);
     }
@@ -59,16 +57,20 @@ int main(int argc, char **argv) {
     /* Creates the renderer */
     Renderer main_renderer(window, context);
     
-    /* Loads shaders */
-    std::pair<uint32_t, uint32_t> shader_result = main_renderer.LoadShaders(kShaderPath);
-    std::cout << "Loaded shaders: " << shader_result.first << "/" << shader_result.second << "!";
-    if(shader_result.first != shader_result.second) {
-        std::cout << shader_result.second << " failed to load!";
+    /* Loads shaders and prints the results */
+    ShaderLoadResult shader_result = main_renderer.LoadShaders(kShaderPath);
+    if(shader_result.errors.empty()) {
+        std::cout << "Loaded shaders: (" << shader_result.shaders_loaded << "/" << shader_result.total_shaders << ")";
+        if(shader_result.shaders_failed) {
+            std::cout << shader_result.shaders_failed << " failed to load!";
+        }
+        std::cout << std::endl;
+    } else {
+        // TODO: give error strings instead of exceptions.
     }
-    std::cout << std::endl;
 
     /* Geometry data */
-    const glm::vec3 vertices[] =
+    glm::vec3 vertices[] =
     {
         { -0.5f,-0.5f, 0.0f },
         { 0.5f,-0.5f, 0.0f },
@@ -102,14 +104,16 @@ int main(int argc, char **argv) {
 
     /*  Sets the shader */
     uint32_t shader1 = main_renderer.RequestShader("basic");
+    #ifdef _DEBUG
     if(main_renderer.IsErrorShader(shader1)){
         std::cout << "The requested shader \"basic\" could not be found! Falling back..." << std::endl;
     }
+    #endif
     glCall(glUseProgram(shader1));
 
     /* Create a uniform and uses it with the shader */
-    //uint32_t u1_loc;
-    //glCallAssignment(u1_loc, glGetUniformLocation(shader1, "u_Color"));
+    uint32_t u1_loc;
+    glCallAssignment(u1_loc, glGetUniformLocation(shader1, "u_Color"));
 
     /* Used to animate the color */
     int32_t color_increment = 1;
@@ -127,7 +131,11 @@ int main(int argc, char **argv) {
             }
         }
 
-        /* Updates the color */
+        /* Updates geometry position and the color */
+        vertices[0] += 0.0025f * color_increment * glm::vec3(1.0f, 1.0f, 0.0f);
+        vertices[1] += 0.0025f * color_increment * glm::vec3(1.0f, 1.0f, 0.0f);
+        vertices[2] -= 0.0025f * color_increment * glm::vec3(1.0f, 1.0f, 0.0f);
+        vertices[3] -= 0.0025f * color_increment * glm::vec3(1.0f, 1.0f, 0.0f);
         add_color.z += 0.01f * color_increment;
 
         if(add_color.z > 1.0f) {
@@ -137,7 +145,10 @@ int main(int argc, char **argv) {
             color_increment = 1;
             add_color.z = 0.0f;
         }
-        //glCall(glUniform4f(u1_loc, add_color.x, add_color.y, add_color.z, 0.0f));
+
+        /* Fill the buffer with the new geometry data and assigns the color to the uniform  */
+        glCall(glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW));
+        glCall(glUniform4f(u1_loc, add_color.x, add_color.y, add_color.z, 0.0f));
 
         /* Renders */        
         glCall(glClear(GL_COLOR_BUFFER_BIT));
