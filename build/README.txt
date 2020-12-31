@@ -1,5 +1,7 @@
 To run the program you must maintain the /res folder along with the executable.
 
+ON WINDOWS:
+
 You will also need a copy of glew32.dll and SDL2.dll!!!
 
 The game will probably run on your machine, because if you followed the project's main README configuration these .dlls are probably on your PATH!

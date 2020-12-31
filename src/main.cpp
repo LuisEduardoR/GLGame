@@ -14,7 +14,11 @@ constexpr uint32_t kWindowDimensionsX = 1024;
 constexpr uint32_t kWindowDimensionsY = 768;
 
 /* File paths */
-constexpr char kShaderPath[] = ".\\res\\shaders";
+#if __linux__
+    constexpr char kShaderPath[] = "./res/shaders";
+#else
+    constexpr char kShaderPath[] = ".\\res\\shaders";
+# endif
 
 /* OpenGL version */
 constexpr uint32_t kGLMajor = 3, kGLMinor = 3;

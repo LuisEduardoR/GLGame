@@ -4,9 +4,15 @@
 		{
 			"type": "shell",
 			"label": "C/C++: g++.exe build release",
-			"command": "mingw32-make",
+			"windows": {
+				"command": "mingw32-make",
+				"args": [
+					"release-windows"
+				],
+			},
+			"command": "make",
 			"args": [
-				"release"
+				"release-linux"
 			],
 			"options": {
 				"cwd": "${workspaceFolder}"
@@ -19,9 +25,15 @@
 		{
 			"type": "shell",
 			"label": "C/C++: g++.exe build release and run",
-			"command": "mingw32-make",
+			"windows": {
+				"command": "mingw32-make",
+				"args": [
+					"release-windows-run"
+				],
+			},
+			"command": "make",
 			"args": [
-				"release-run"
+				"release-linux-run"
 			],
 			"options": {
 				"cwd": "${workspaceFolder}"
@@ -34,9 +46,15 @@
 		{
 			"type": "shell",
 			"label": "C/C++: g++.exe build debug",
-			"command": "mingw32-make",
+			"windows": {
+				"command": "mingw32-make",
+				"args": [
+					"debug-windows"
+				],
+			},
+			"command": "make",
 			"args": [
-				"debug"
+				"debug-linux"
 			],
 			"options": {
 				"cwd": "${workspaceFolder}"
@@ -49,9 +67,15 @@
 		{
 			"type": "shell",
 			"label": "C/C++: g++.exe build debug and run",
-			"command": "mingw32-make",
+			"windows": {
+				"command": "mingw32-make",
+				"args": [
+					"debug-windows-run"
+				],
+			},
+			"command": "make",
 			"args": [
-				"debug-run"
+				"debug-linux-run"
 			],
 			"options": {
 				"cwd": "${workspaceFolder}"

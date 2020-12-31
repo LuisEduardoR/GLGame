@@ -7,6 +7,8 @@ by Luís Eduardo Rozante <luis.eduardo.rozante@usp.br>
 
 You will need some configuration before being able to compile the project, follow this instructions:
 
+### Windows
+
 - Install [MSYS2](https://www.msys2.org/) and follow the instructions
 
 - **For x86_64 target:**         
@@ -35,6 +37,12 @@ You will need some configuration before being able to compile the project, follo
   - Do the same as above but swap all occurrences of `mingw-w64-x86_64` for `mingw-w64-i686` and `C:\msys64\mingw64\bin` for `C:\msys64\mingw32\bin` in the **PATH**
 
 **Note:** If MSYS2 was installed somewhere else other than `C:\msys64\`, you will need to not only correct the **PATH** accordingly but the `.vscode\c_cpp_properties.json` and `.vscode\launch.json` too.
+
+### Ubuntu
+
+- Install dependencies:
+
+    > sudo apt install libglew-dev libglm-dev libsdl2-dev 
 
 ---
 
